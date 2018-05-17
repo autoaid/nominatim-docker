@@ -24,7 +24,13 @@ WORKDIR /app
 
 # Configure postgres
 RUN echo "host all  all    0.0.0.0/0  trust" >> /etc/postgresql/9.5/main/pg_hba.conf && \
-    echo "listen_addresses='*'" >> /etc/postgresql/9.5/main/postgresql.conf
+    echo "shared_buffers = 1GB" >> /etc/postgresql/9.5/main/postgresql.conf && \
+    echo "maintenance_work_mem = 5GB" >> /etc/postgresql/9.5/main/postgresql.conf && \
+    echo "work_mem = 50MB" >> /etc/postgresql/9.5/main/postgresql.conf && \
+    echo "effective_cache_size = 8GB" >> /etc/postgresql/9.5/main/postgresql.conf && \
+    echo "synchronous_commit = off" >> /etc/postgresql/9.5/main/postgresql.conf && \
+    echo "checkpoint_timeout = 10min" >> /etc/postgresql/9.5/main/postgresql.conf && \
+    echo "checkpoint_completion_target = 0.9" >> /etc/postgresql/9.5/main/postgresql.conf
 
 # Nominatim install
 ENV NOMINATIM_VERSION v3.0.1
